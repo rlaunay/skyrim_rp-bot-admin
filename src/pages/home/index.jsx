@@ -13,15 +13,15 @@ import classes from "./Home.module.scss";
 import Skeletons from "../../components/UI/Skeletons";
 
 const Home = () => {
-  const { rolePlayers, next, previous, error, isLoading, lastRolePlayer } =
+  const { rolePlayers, next, previous, error, isLoading, firstLoad, getSearch } =
     useRolePlayers();
 
   return (
     <React.Fragment>
       <H1 className={classes.h1}>Gestion des personnages</H1>
-      <Search />
+      <Search onSearch={getSearch} />
       {isLoading ? (
-        lastRolePlayer ? (
+        !firstLoad ? (
           <Skeletons nb={lastRolePlayer} />
         ) : (
           <div className={classes.oui}>

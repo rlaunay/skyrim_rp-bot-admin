@@ -12,11 +12,16 @@ import classes from "./CharacterEdit.module.scss";
 import Success from "../UI/Success";
 
 const CharacterEdit = (props) => {
-  const [loading, setLoading] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [error, setError] = useState(false);
-
-  const { getCharacter, char, updateChar } = useCharacters(props.discordId);
+  const { 
+    getCharacter, 
+    char, 
+    update: { 
+      updateChar, 
+      updateLoading, 
+      updateError, 
+      updateSuccess 
+    } 
+  } = useCharacters(props.discordId);
   const {
     handleSubmit,
     register,
@@ -37,18 +42,12 @@ const CharacterEdit = (props) => {
 
   const submitHandler = ({ name, money, status }) => {
     if (money === char.money && name === char.name && status === char.status) return;
-    setLoading(true);
-    updateChar(props.charId, { name, money: +money, status: +status }).then(({ res, error }) => {
-      setLoading(false);
-      setError(error);
-      setSuccess(res);
-    });
+    updateChar(props.charId, { name, money: +money, status: +status });
   };
 
-  console.log("rerendu");
   let form = (
     <form onSubmit={handleSubmit(submitHandler)} className={classes.form}>
-      {error && <h3>Une erreur est survenue veuillez reessayer!</h3>}
+      {updateError && <h3>Une erreur est survenue veuillez reessayer!</h3>}
       <Input {...characterForm.name} error={errors.name} register={register} disabled={!char} />
       <Input {...characterForm.money} error={errors.money} register={register} disabled={!char} />
       <select disabled={!char} {...register("status", characterForm.status.rules)}>
@@ -64,13 +63,13 @@ const CharacterEdit = (props) => {
     </form>
   );
 
-  if (loading) {
+  if (updateLoading) {
     form = (
       <div className={classes.loading}>
         <Loader />
       </div>
     );
-  } else if (!loading && success) {
+  } else if (!updateLoading && updateSuccess) {
     form = <Success />;
   }
 

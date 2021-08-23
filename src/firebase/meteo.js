@@ -1,4 +1,11 @@
-import { collection, onSnapshot } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  onSnapshot,
+  updateDoc,
+  addDoc,
+} from "firebase/firestore";
 import { db } from "./config";
 
 export const listenMeteos = (next, error) => {
@@ -10,4 +17,18 @@ export const listenMeteos = (next, error) => {
     },
     error
   );
+};
+
+export const updateMeteo = async (id, meteo) => {
+  const ref = doc(db, "meteos", id);
+  await updateDoc(ref, meteo);
+};
+
+export const deleteMeteo = async (id) => {
+  const ref = doc(db, "meteos", id);
+  await deleteDoc(ref);
+};
+
+export const createMeteo = async (id, meteo) => {
+  await addDoc(collection(db, "meteos"), meteo);
 };

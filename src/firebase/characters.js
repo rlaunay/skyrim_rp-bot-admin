@@ -6,16 +6,13 @@ import {
   getDocs,
   doc,
   updateDoc,
+  deleteDoc,
 } from "firebase/firestore";
 
 export const getRolePlayerCharacters = async (discordId) => {
-  try {
-    const snap = await getDocs(collection(db, `users/${discordId}/characters`));
-    const res = snap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-    return { res, error: null };
-  } catch (error) {
-    return { res: null, error };
-  }
+  const snap = await getDocs(collection(db, `users/${discordId}/characters`));
+  const res = snap.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+  return res;
 };
 
 export const listenPlayerCharacters = (discordId, next, error) => {
@@ -30,25 +27,18 @@ export const listenPlayerCharacters = (discordId, next, error) => {
 };
 
 export const getOneCharacter = async (discordId, charId) => {
-  try {
-    const snap = await getDoc(
-      doc(db, "users", discordId, "characters", charId)
-    );
+  const snap = await getDoc(doc(db, "users", discordId, "characters", charId));
 
-    const res = { id: snap.id, ...snap.data() };
-    return { res, error: null };
-  } catch (error) {
-    return { res: null, error };
-  }
+  const res = { id: snap.id, ...snap.data() };
+  return res;
 };
 
-export const updateCharcter = async (discordId, charId, char) => {
-  try {
-    const ref = doc(db, "users", discordId, "characters", charId);
+export const updateCharacter = async (discordId, charId, char) => {
+  const ref = doc(db, "users", discordId, "characters", charId);
+  await updateDoc(ref, char);
+};
 
-    await updateDoc(ref, char);
-    return { res: true, error: false };
-  } catch (error) {
-    return { res: false, error: true };
-  }
+export const deleteCharacter = async (discordId, charId) => {
+  const ref = doc(db, "users", discordId, "characters", charId);
+  await deleteDoc(ref);
 };

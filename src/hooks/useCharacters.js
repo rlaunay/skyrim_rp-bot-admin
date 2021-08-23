@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import {
   getRolePlayerCharacters,
   getOneCharacter,
-  updateCharcter,
+  updateCharacter,
   listenPlayerCharacters,
 } from "../firebase/characters";
 
@@ -11,20 +11,16 @@ const useRolePlayers = (discordId) => {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [char, setChar] = useState(null);
+  const [updateLoading, setUpdateLoading] = useState(false);
+  const [updateError, setUpdateError] = useState(null);
+  const [updateSuccess, setUpdateSuccess] = useState(false);
 
   const getCharacters = useCallback(() => {
     setIsLoading(true);
     getRolePlayerCharacters(discordId)
-      .then(({ res, error }) => {
-        setIsLoading(false);
-        setCharacters(res);
-        setError(error);
-      })
-      .catch((error) => {
-        setCharacters(null);
-        setError(error);
-        setIsLoading(false);
-      });
+      .then((res) => setCharacters(res))
+      .catch((error) => setError(error))
+      .finally(() => setIsLoading(false));
   }, []);
 
   const listenCharcters = () => {
@@ -33,12 +29,11 @@ const useRolePlayers = (discordId) => {
       discordId,
       (chars) => {
         setIsLoading(false);
-        console.log(chars);
         setCharacters(chars);
       },
       (err) => {
         setIsLoading(false);
-        console.log(err);
+        console.error(err);
         setError(err);
       }
     );
@@ -46,16 +41,28 @@ const useRolePlayers = (discordId) => {
 
   const getCharacter = async (charId) => {
     getOneCharacter(discordId, charId)
-      .then(({ res, error }) => {
+      .then((res) => {
         setChar(res);
       })
-      .catch(() => {
-        setChar(null);
+      .catch((error) => {
+        console.error(error);
+        setError(error);
       });
   };
 
   const updateChar = async (charId, updatedChar) => {
-    return await updateCharcter(discordId, charId, updatedChar);
+    setUpdateLoading(true);
+    updateCharacter(discordId, charId, updatedChar)
+      .then(() => setUpdateSuccess(true))
+      .catch((error) => setUpdateError(error))
+      .finally(() => setUpdateLoading(false));
+  };
+
+  const update = {
+    updateChar,
+    updateLoading,
+    updateError,
+    updateSuccess,
   };
 
   return {
@@ -66,7 +73,7 @@ const useRolePlayers = (discordId) => {
     getCharacters,
     getCharacter,
     char,
-    updateChar,
+    update,
   };
 };
 
