@@ -13,14 +13,14 @@ import {
 
 const usersRef = collection(db, "users");
 
-export const getRolePlayers = async (searchParams) => {
-  let query = query(usersRef, orderBy("discordTag"));
+export const getRolePlayers = async (searchParams = "") => {
+  let queryRP = query(usersRef, orderBy("discordTag"));
 
   if (searchParams.length > 1) {
-    query = query(query, where("discordTag", ">=", searchParams))
+    queryRP = query(queryRP, where("discordTag", ">=", searchParams));
   }
 
-  const snapshot = await getDocs(query(query, limit(10)));
+  const snapshot = await getDocs(query(queryRP, limit(10)));
 
   const data = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
 

@@ -29,6 +29,6 @@ export const deleteMeteo = async (id) => {
   await deleteDoc(ref);
 };
 
-export const createMeteo = async (id, meteo) => {
+export const createMeteo = async (meteo) => {
   await addDoc(collection(db, "meteos"), meteo);
 };

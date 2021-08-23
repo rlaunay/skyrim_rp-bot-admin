@@ -20,10 +20,19 @@ const Meteos = (props) => {
       </thead>
       <tbody>
         {props.meteos.length === 0 && (
-          <h3 className={classes.h3}>Il n'y pas de meteos</h3>
+          <tr>
+            <th colSpan="6" className={classes.h3}>
+              Il n'y pas de meteos
+            </th>
+          </tr>
         )}
         {props.meteos.map((meteo) => (
-          <Meteo meteo={meteo} onRemove={props.onRemove} />
+          <Meteo
+            key={meteo.id}
+            meteo={meteo}
+            onRemove={props.onRemove}
+            onEdit={props.onEdit}
+          />
         ))}
       </tbody>
     </table>

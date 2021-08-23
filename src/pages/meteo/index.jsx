@@ -11,19 +11,37 @@ import classes from "./Meteo.module.scss";
 const Meteo = () => {
   const { meteos, error, loading, mod, deleteHandler } = useMeteo();
   const [open, setOpen] = useState(false);
+  const [editedMeteo, setEditedMeteo] = useState(null);
 
   const toggleHandler = () => {
+    setEditedMeteo(null);
     setOpen((old) => !old);
+  };
+
+  const editHandler = (meteo) => {
+    setEditedMeteo(meteo);
+    setOpen(true);
   };
 
   return (
     <React.Fragment>
-      {open && <MeteoEdit onClose={toggleHandler} mod={mod} />}
+      {open && (
+        <MeteoEdit
+          onClose={toggleHandler}
+          mod={mod}
+          editedMeteo={editedMeteo}
+        />
+      )}
       <H1>Gestion de la meteo</H1>
       {loading ? (
         <Loader />
       ) : (
-        <Meteos error={error} meteos={meteos} onRemove={deleteHandler} />
+        <Meteos
+          error={error}
+          meteos={meteos}
+          onRemove={deleteHandler}
+          onEdit={editHandler}
+        />
       )}
       <button className={classes.plus} onClick={toggleHandler}>
         <Plus />

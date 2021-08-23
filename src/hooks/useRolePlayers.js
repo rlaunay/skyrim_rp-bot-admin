@@ -1,39 +1,48 @@
 import { useEffect, useState } from "react";
-import { getRolePlayers, getNextRolePlayers, getPreviousRolePlayers } from "../firebase/rolePlayers";
+import {
+  getRolePlayers,
+  getNextRolePlayers,
+  getPreviousRolePlayers,
+} from "../firebase/rolePlayers";
 
 const useRolePlayers = () => {
   const [rolePlayers, setRolePlayers] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [firstLoad, setFirstLoad] = useState(true);
-  const [search, setSearch] = useState('');
+  const [nbRolePlayer, setNbRolePlayer] = useState(null);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     getRolePlayers()
       .then((data) => {
         setRolePlayers(data);
-        setFirstLoad(false);
       })
-      .catch((err) => setError(err))
+      .catch((err) => {
+        console.error(err);
+        setError(err);
+      })
       .finally(() => setIsLoading(false));
   }, []);
 
   const next = () => {
+    setNbRolePlayer(rolePlayers.length);
     if (rolePlayers.length <= 1) return;
     setIsLoading(true);
     getNextRolePlayers(rolePlayers[rolePlayers.length - 1])
-      .then((data,) => {
+      .then((data) => {
         if (data.length === 0) return; // setError({ error: { code: "limit" } });
         setRolePlayers(data);
       })
       .catch((err) => {
         setError(err);
-      }).finally(() => {
+      })
+      .finally(() => {
         setIsLoading(false);
       });
   };
 
   const previous = () => {
+    setNbRolePlayer(rolePlayers.length);
     setIsLoading(true);
     getPreviousRolePlayers(rolePlayers[0])
       .then((data) => {
@@ -42,16 +51,25 @@ const useRolePlayers = () => {
       })
       .catch((err) => {
         setError(err);
-      }).finally(() => {
+      })
+      .finally(() => {
         setIsLoading(false);
       });
   };
 
   const getSearch = (txt) => {
-    setSearch(txt)
-  }
+    setSearch(txt);
+  };
 
-  return { rolePlayers, next, previous, error, isLoading, firstLoad, getSearch };
+  return {
+    rolePlayers,
+    next,
+    previous,
+    error,
+    isLoading,
+    nbRolePlayer,
+    getSearch,
+  };
 };
 
 export default useRolePlayers;

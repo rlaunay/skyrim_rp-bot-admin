@@ -67,7 +67,7 @@ export const characterForm = {
 export const meteoForm = {
   channelId: {
     type: "number",
-    name: "discordId",
+    name: "channelId",
     label: "Channel ID",
     rules: {
       required: true,

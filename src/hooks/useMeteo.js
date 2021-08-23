@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { createMeteo, deleteMeteo, listenMeteos } from "../firebase/meteo";
+import {
+  createMeteo,
+  deleteMeteo,
+  listenMeteos,
+  updateMeteo,
+} from "../firebase/meteo";
 
 const useMeteo = () => {
   const [meteos, setMeteos] = useState([]);
@@ -29,23 +34,48 @@ const useMeteo = () => {
     };
   }, []);
 
-  const createMeteoHanler = (name, channelId, beau, humide, froid) => {
+  const reset = () => {
+    setModLoading(false);
+    setModSuccess(false);
+    setModError(null);
+  };
+
+  const createMeteoHanler = (meteo) => {
     setModLoading(true);
-    createMeteo({ name, channelId, beau, humide, froid })
+    createMeteo(meteo)
       .then(() => setModSuccess(true))
-      .catch(setModError)
+      .catch((error) => {
+        console.error(error);
+        setModError(error);
+      })
       .finally(() => setModLoading(false));
   };
 
   const deleteHandler = (id) => {
-    deleteMeteo(id).catch((error) => setError(error));
+    deleteMeteo(id).catch((error) => {
+      console.error(error);
+      setError(error);
+    });
+  };
+
+  const updateMeteoHanler = (id, meteo) => {
+    setModLoading(true);
+    updateMeteo(id, meteo)
+      .then(() => setModSuccess(true))
+      .catch((error) => {
+        console.error(error);
+        setModError(error);
+      })
+      .finally(() => setModLoading(false));
   };
 
   const mod = {
     create: createMeteoHanler,
+    update: updateMeteoHanler,
     modLoading,
     modError,
     modSuccess,
+    reset,
   };
 
   return { meteos, loading, error, mod, deleteHandler };

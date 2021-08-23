@@ -1,0 +1,15 @@
+.btns {
+  display: flex;
+  justify-content: space-between;
+}
+
+.loading {
+  display: grid;
+  place-items: center;
+  height: 300px;
+}
+
+.error {
+  text-align: center;
+  color: #f44336;
+}
