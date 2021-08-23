@@ -1,0 +1,31 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #2c3e50;
+  padding: 0 20px;
+
+  & h1 {
+    color: white;
+  }
+
+  & .links {
+    margin: 0 50px 0 auto;
+
+    & a {
+      margin: 10px;
+      padding: 5px 10px;
+      border-radius: 5px;
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      transition: 300ms;
+
+      &.active,
+      &:hover {
+        color: #2c3e50;
+        background-color: white;
+      }
+    }
+  }
+}

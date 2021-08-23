@@ -1,0 +1,111 @@
+$error: #f44336;
+$focus: #3498db;
+
+.container {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 15px;
+  transition: all 100ms;
+
+  & .input_container {
+    width: 100%;
+    position: relative;
+
+    & input {
+      box-sizing: border-box;
+      width: 100%;
+      border-radius: 4px;
+      border: 1px solid rgba(#000000, 0.12);
+      margin: 1px;
+      outline: none;
+      padding: 16px;
+      font-size: 16px;
+      font-weight: 500;
+      color: rgba(#000000, 0.83);
+      transition: border-color 100ms;
+
+      &:hover {
+        border: 2px solid rgba(#000000, 0.12);
+        margin: 0;
+      }
+    }
+
+    & label {
+      color: rgba(#000000, 0.6);
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 17px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: text;
+      transition: all 100ms;
+    }
+
+    & svg {
+      height: 24px;
+      width: 24px;
+      color: $error;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      right: 12px;
+      opacity: 0;
+      transition: opacity 100ms;
+      pointer-events: none;
+    }
+
+    & input:focus {
+      border: 2px solid $focus;
+      margin: 0;
+    }
+
+    & input:not(:placeholder-shown) ~ label {
+      top: 0;
+      background-color: white;
+      padding: 2px;
+      font-size: 12px;
+    }
+
+    & input:focus ~ label {
+      top: 0;
+      background-color: white;
+      padding: 2px;
+      font-size: 12px;
+      color: $focus;
+    }
+  }
+
+  & .error {
+    margin: 0 16px;
+    margin-top: 4px;
+    font-size: 12px;
+    color: $error;
+    font-weight: 700;
+    height: 0;
+    opacity: 0;
+    transition: height 100ms, opacity 100ms;
+  }
+}
+
+.container.invalid {
+  & .error {
+    height: 25px;
+    opacity: 1;
+  }
+
+  & input,
+  & input:focus {
+    padding-right: 40px;
+    border-color: $error;
+  }
+
+  & label,
+  & input:focus ~ label {
+    color: $error;
+  }
+
+  & svg {
+    opacity: 1;
+  }
+}

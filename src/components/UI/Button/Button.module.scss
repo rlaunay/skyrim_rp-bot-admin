@@ -1,0 +1,27 @@
+$color: #3498db;
+
+.button {
+  background-color: $color;
+  color: white;
+  height: 36px;
+  padding: 0 16px;
+  font-size: 15px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+  outline: none;
+
+  background-position: center;
+  transition: background 0.6s;
+
+  &:hover {
+    background: #47a7f5 radial-gradient(circle, transparent 1%, #47a7f5 1%) center/15000%;
+  }
+
+  &:active {
+    background-color: #6eb9f7;
+    background-size: 100%;
+    transition: background 0s;
+  }
+}

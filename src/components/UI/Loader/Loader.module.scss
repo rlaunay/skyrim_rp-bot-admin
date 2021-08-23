@@ -1,0 +1,53 @@
+.section {
+  height: 100px;
+  width: 100%;
+  display: grid;
+  place-items: center;
+
+  & .loader {
+    width: 50px;
+    height: 50px;
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+    border-radius: 50px;
+    border: 6px solid transparent;
+    border-top-color: rgb(44, 62, 80);
+    border-bottom-color: rgb(44, 62, 80);
+    animation: spin 1s linear infinite;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: 6px;
+      bottom: 6px;
+      left: 6px;
+      right: 6px;
+      border-radius: 50px;
+      border: 6px solid transparent;
+      border-top-color: rgba(44, 62, 80, 0.6);
+      border-bottom-color: rgba(44, 62, 80, 0.6);
+      animation: spinreverse 2s linear infinite;
+    }
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinreverse {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(-360deg);
+  }
+}

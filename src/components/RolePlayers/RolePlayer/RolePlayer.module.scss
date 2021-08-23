@@ -1,0 +1,78 @@
+.li {
+  border-bottom: 1px solid rgba(44, 62, 80, 0.5);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  & .user {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-image: none;
+    height: 70px;
+    border: none;
+    background-color: transparent;
+    width: 100%;
+
+    min-width: 300px;
+    color: #2c3e50;
+    padding: 0 10px;
+
+    cursor: pointer;
+    transition: background-color 200ms;
+
+    & h2 {
+      font-size: 24px;
+      font-weight: 500;
+    }
+
+    &.loading {
+      background-color: rgba(0, 0, 0, 0.05);
+      position: relative;
+      overflow: hidden;
+
+      &:after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        transform: translateX(-100%);
+        animation: waves 2s linear 0.3s infinite;
+        background: linear-gradient(90deg, transparent, rgba(8, 16, 43, 0.1), transparent);
+      }
+    }
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 7%);
+    }
+
+    & svg {
+      height: 16px;
+      width: 16px;
+      transition: transform 200ms;
+    }
+  }
+
+  &.open {
+    & .user {
+      & svg {
+        transform: rotate(180deg);
+      }
+    }
+  }
+}
+
+@keyframes waves {
+  0% {
+    transform: translateX(-100%);
+  }
+  80% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

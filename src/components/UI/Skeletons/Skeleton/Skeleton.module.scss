@@ -1,0 +1,38 @@
+.skeleton {
+  height: 70px;
+  display: flex;
+  align-items: center;
+
+  background-color: rgba(0, 0, 0, 0.02);
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid rgba(44, 62, 80, 0.5);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    transform: translateX(-100%);
+    animation: waves 2s linear 0.5s infinite;
+    background: linear-gradient(90deg, transparent, rgba(0, 0, 0, 0.06), transparent);
+  }
+}
+
+@keyframes waves {
+  0% {
+    transform: translateX(-100%);
+  }
+  60% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

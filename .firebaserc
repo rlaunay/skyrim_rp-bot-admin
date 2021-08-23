@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "skyrim-rp-test",
+    "dev": "skyrim-rp-test",
+    "prod": "skyrim-rp"
+  }
+}

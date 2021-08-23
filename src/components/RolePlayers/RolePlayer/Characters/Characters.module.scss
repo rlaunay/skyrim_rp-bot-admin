@@ -1,0 +1,18 @@
+.characters {
+  list-style: none;
+  padding: 0;
+  max-height: 0;
+  transition: max-height 200ms ease-out;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+
+  & h3 {
+    margin: 50px auto;
+  }
+
+  &.open {
+    max-height: 500px;
+    transition: max-height 200ms ease-in;
+  }
+}

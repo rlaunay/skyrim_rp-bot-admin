@@ -1,0 +1,43 @@
+.loading {
+  display: grid;
+  place-items: center;
+  height: 300px;
+}
+
+.form {
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  & h3 {
+    color: #f44336;
+    text-align: center;
+  }
+
+  & select {
+    margin: 1px 1px 15px 1px;
+    height: 40px;
+    font-size: 16px;
+    padding: 0 15px;
+    border-radius: 5px;
+    border: 1px solid rgba(#000000, 0.12);
+    cursor: pointer;
+    outline: none;
+    color: rgba(#000000, 0.83);
+
+    &:hover {
+      border: 2px solid rgba(#000000, 0.12);
+      margin: 1px 0 15px 0;
+    }
+
+    &:focus {
+      border: 2px solid #3498db;
+      margin: 1px 0 15px 0;
+    }
+  }
+
+  & .btns {
+    display: flex;
+    justify-content: space-between;
+  }
+}

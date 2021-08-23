@@ -1,0 +1,20 @@
+.oui {
+  height: 300px;
+  display: flex;
+  align-items: center;
+}
+
+.btns {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+
+  & button {
+    display: grid;
+    place-items: center;
+
+    & svg {
+      height: 24px;
+    }
+  }
+}
